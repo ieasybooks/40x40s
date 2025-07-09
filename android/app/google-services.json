@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "402585175754",
+    "project_id": "fourtyfourties",
+    "storage_bucket": "fourtyfourties.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:402585175754:android:4479930e6515f76f769633",
+        "android_client_info": {
+          "package_name": "com.example.fourtyfourties"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDGef8btLKYKw7Ll-7ElZgD1z8Z8ugtGbE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
