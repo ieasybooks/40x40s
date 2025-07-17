@@ -52,25 +52,31 @@ dependencies:
   shimmer:
   path_provider:
   url_launcher:
+  introduction_screen:
+  is_first_run:
+  connectivity_plus:
+  cloud_firestore:
+  firebase_storage: ^12.4.9
+  share_plus:
+  clipboard:
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  #   flutter_lints: ^5.0.0
-  #   flutter_en_json_extractor:
-  #   change_app_package_name:
-  #   flutter_launcher_icons: #^0.14.1
+  flutter_lints: ^5.0.0
+  change_app_package_name:
+  flutter_launcher_icons: #^0.14.1
 
-  # flutter_launcher_icons:
-  #   android: true
-  #   ios: true
-  #   image_path: "assets/ic_launcher_foreground.png"
-  #   adaptive_icon_path: "assets/ic_launcher_foreground.png"
-  #   image_path_ios: "assets/512.png"
-  #   remove_alpha_ios: true
-  #   adaptive_icon_background: "#0072FD"
-  #   adaptive_icon_foreground: "assets/ic_launcher_foreground.png"
-  #   adaptive_icon_padding: true
+flutter_launcher_icons:
+  android: true
+  ios: true
+  image_path: "assets/ic_launcher_foreground.png"
+  adaptive_icon_path: "assets/ic_launcher_foreground.png"
+  image_path_ios: "assets/play_store_512.png"
+  remove_alpha_ios: true
+  adaptive_icon_background: "#47AB6A"
+  adaptive_icon_foreground: "assets/ic_launcher_foreground.png"
+  adaptive_icon_padding: true
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
@@ -112,10 +118,10 @@ flutter:
   # "family" key with the font family name, and a "fonts" key with a
   # list giving the asset and other descriptors for the font. For
   # example:
-  # fonts:
-  #   - family: Schyler
-  #     fonts:
-  #       - asset: fonts/Schyler-Regular.ttf
+  fonts:
+    - family: MyriadArabic
+      fonts:
+        - asset: assets/fonts/MyriadArabic-Regular.otf
   #       - asset: fonts/Schyler-Italic.ttf
   #         style: italic
   #   - family: Trajan Pro

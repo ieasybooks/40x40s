@@ -65,4 +65,5 @@ class DefaultFirebaseOptions {
     storageBucket: 'fourtyfourties.firebasestorage.app',
     iosBundleId: 'com.example.fourtyfourties',
   );
+
 }
