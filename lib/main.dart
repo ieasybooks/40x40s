@@ -99,18 +99,51 @@ class MyApp extends StatelessWidget {
               ),
               elevatedButtonTheme: ElevatedButtonThemeData(
                 style: ButtonStyle(
-                  backgroundColor: WidgetStatePropertyAll(whiteColor),
+                  backgroundColor: WidgetStatePropertyAll(
+                    theme.isDark ? whiteInDark : whiteColor,
+                  ),
+                  foregroundColor: WidgetStatePropertyAll(
+                    theme.isDark ? whiteColor : blackColor,
+                  ),
+                  shadowColor: WidgetStatePropertyAll(
+                    theme.isDark ? whiteColor : blackColor,
+                  ),
+                  elevation: WidgetStatePropertyAll(3),
                 ),
               ),
 
-              listTileTheme: ListTileThemeData(tileColor: whiteColor),
+              listTileTheme: ListTileThemeData(
+                tileColor:
+                    theme.isDark
+                        ? whiteColor.withValues(alpha: 0.25)
+                        : whiteColor,
+                titleTextStyle: labelLarge.copyWith(
+                  color: theme.isDark ? whiteColor : blackColor,
+                ),
+                contentPadding: EdgeInsets.all(16),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(18),
+                ),
+              ),
+              cardTheme: CardThemeData(
+                color: theme.isDark ? whiteInDark : whiteColor,
+                elevation: 3,
+                shadowColor: theme.isDark ? whiteColor : blackColor,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(18),
+                ),
+              ),
               shadowColor: blackColor,
 
               iconTheme: IconThemeData(
                 color: theme.isDark ? whiteColor : blackColor,
               ),
             ),
-            home: UpgradeAlert(showIgnore: false, child: SplashScreen()),
+            home: UpgradeAlert(
+              dialogStyle: UpgradeDialogStyle.cupertino,
+              showIgnore: false,
+              child: SplashScreen(),
+            ),
           );
         },
       ),

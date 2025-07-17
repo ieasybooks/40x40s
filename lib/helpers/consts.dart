@@ -66,3 +66,9 @@ TextStyle labelSmall = const TextStyle(
   color: blackColor,
   fontFamily: 'MyriadArabic',
 );
+
+RoundedRectangleBorder roundedShape = RoundedRectangleBorder(
+  borderRadius: BorderRadius.circular(18),
+);
+
+BorderRadius roundedRadius = BorderRadius.circular(18);
