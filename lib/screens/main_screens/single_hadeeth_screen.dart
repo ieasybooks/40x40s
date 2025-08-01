@@ -52,7 +52,7 @@ class SingleHadeethScreen extends StatelessWidget {
                         BoxShadow(
                           color:
                               theme.isDark
-                                  ? whiteInDark
+                                  ? whiteInDark.withValues(alpha: 0.0)
                                   : whiteInDark.withValues(alpha: 0.05),
                           spreadRadius: 5,
                           blurRadius: 7,

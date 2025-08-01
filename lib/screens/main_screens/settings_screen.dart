@@ -46,7 +46,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
               Expanded(
                 child: Padding(
-                  padding: const EdgeInsets.all(24.0),
+                  padding: const EdgeInsets.all(16.0),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -71,7 +71,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                 BoxShadow(
                                   color:
                                       theme.isDark
-                                          ? whiteInDark
+                                          ? whiteInDark.withValues(alpha: 0.0)
                                           : whiteInDark.withValues(alpha: 0.05),
                                   spreadRadius: 5,
                                   blurRadius: 7,
@@ -129,7 +129,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                     BoxShadow(
                                       color:
                                           theme.isDark
-                                              ? whiteInDark
+                                              ? whiteInDark.withValues(
+                                                alpha: 0.0,
+                                              )
                                               : whiteInDark.withValues(
                                                 alpha: 0.05,
                                               ),
@@ -194,7 +196,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                     BoxShadow(
                                       color:
                                           theme.isDark
-                                              ? whiteInDark
+                                              ? whiteInDark.withValues(
+                                                alpha: 0.0,
+                                              )
                                               : whiteInDark.withValues(
                                                 alpha: 0.05,
                                               ),

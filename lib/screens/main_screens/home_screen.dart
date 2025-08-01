@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_animate/flutter_animate.dart';
@@ -23,10 +24,72 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen>
     with SingleTickerProviderStateMixin {
+  late ScrollController _scrollController;
+  late AnimationController _animationController;
+  bool _isBottomBarVisible = true;
+  double _lastScrollPosition = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    _scrollController = ScrollController();
+    _animationController = AnimationController(
+      duration: const Duration(milliseconds: 300),
+      vsync: this,
+    );
+
+    _scrollController.addListener(_onScroll);
+    _animationController.forward();
+  }
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    _animationController.dispose();
+    super.dispose();
+  }
+
+  void _onScroll() {
+    final currentPosition = _scrollController.position.pixels;
+    final scrollDelta = currentPosition - _lastScrollPosition;
+
+    // Only trigger if scroll amount is significant enough
+    if (scrollDelta.abs() > 5) {
+      if (scrollDelta > 0) {
+        // Scrolling down - hide bottom bar
+        if (_isBottomBarVisible) {
+          setState(() {
+            _isBottomBarVisible = false;
+          });
+          if (kDebugMode) {
+            print('Scrolling down - hiding bottom bar');
+          }
+        }
+      } else {
+        // Scrolling up - show bottom bar
+        if (!_isBottomBarVisible) {
+          setState(() {
+            _isBottomBarVisible = true;
+          });
+          if (kDebugMode) {
+            print('Scrolling up - showing bottom bar');
+          }
+        }
+      }
+    }
+    _lastScrollPosition = currentPosition;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Consumer2<EncyclopediaProvider, DarkThemeProvider>(
       builder: (context, encyclopediaConsumer, darkThemeConsumer, child) {
+        // Add listener to TabController when it's available
+        if (encyclopediaConsumer.encycleopediaTabController != null) {
+          encyclopediaConsumer.encycleopediaTabController!.addListener(() {
+            setState(() {});
+          });
+        }
         return Scaffold(
           key: homeScaffoldKey,
 
@@ -80,6 +143,8 @@ class _HomeScreenState extends State<HomeScreen>
                                 ],
                               ),
                             ),
+                            SizedBox(height: 8),
+
                             TabBar(
                               controller:
                                   encyclopediaConsumer
@@ -107,7 +172,7 @@ class _HomeScreenState extends State<HomeScreen>
                                     );
                                   }).toList(),
                             ),
-                            SizedBox(height: 24),
+                            SizedBox(height: 0),
                             Expanded(
                               child: TabBarView(
                                 controller:
@@ -126,7 +191,7 @@ class _HomeScreenState extends State<HomeScreen>
                                                 color:
                                                     darkThemeConsumer.isDark
                                                         ? whiteColor.withValues(
-                                                          alpha: 0.2,
+                                                          alpha: 0.0,
                                                         )
                                                         : blackColor.withValues(
                                                           alpha: 0.1,
@@ -144,6 +209,7 @@ class _HomeScreenState extends State<HomeScreen>
                                             ),
                                           ),
                                           child: SingleChildScrollView(
+                                            controller: _scrollController,
                                             child: Column(
                                               children: [
                                                 Padding(
@@ -177,6 +243,10 @@ class _HomeScreenState extends State<HomeScreen>
                                                 Column(
                                                   children: [
                                                     ListView.builder(
+                                                      padding:
+                                                          EdgeInsets.symmetric(
+                                                            vertical: 2,
+                                                          ),
                                                       shrinkWrap: true,
                                                       physics:
                                                           const NeverScrollableScrollPhysics(),
@@ -302,6 +372,8 @@ class _HomeScreenState extends State<HomeScreen>
                                                                 hadeeth
                                                                     .hadeethContent,
                                                                 style: labelLarge.copyWith(
+                                                                  fontFamily:
+                                                                      "Kitab-font",
                                                                   color:
                                                                       darkThemeConsumer
                                                                               .isDark
@@ -311,6 +383,19 @@ class _HomeScreenState extends State<HomeScreen>
                                                                 textAlign:
                                                                     TextAlign
                                                                         .justify,
+                                                              ),
+                                                              Divider(
+                                                                color:
+                                                                    darkThemeConsumer
+                                                                            .isDark
+                                                                        ? whiteColor.withValues(
+                                                                          alpha:
+                                                                              0.05,
+                                                                        )
+                                                                        : blackColor.withValues(
+                                                                          alpha:
+                                                                              0.05,
+                                                                        ),
                                                               ),
                                                             ],
                                                           ),
@@ -336,55 +421,66 @@ class _HomeScreenState extends State<HomeScreen>
                             ),
                           ],
                         ),
+
+                        // when scroll down, hide the bottom bar
                         Positioned(
                           bottom: 0,
                           right: 0,
                           left: 0,
-                          child: Container(
-                            decoration: BoxDecoration(
-                              color: blackColor.withValues(alpha: 0.8),
-                              borderRadius: BorderRadius.vertical(
-                                top: Radius.circular(26),
+                          child: AnimatedSlide(
+                            offset:
+                                _isBottomBarVisible
+                                    ? Offset.zero
+                                    : const Offset(0, 1),
+                            duration: 300.ms,
+
+                            child: Container(
+                              decoration: BoxDecoration(
+                                color: blackColor.withValues(alpha: 0.8),
+                                borderRadius: BorderRadius.vertical(
+                                  top: Radius.circular(26),
+                                ),
                               ),
-                            ),
-                            child: Padding(
-                              padding: const EdgeInsets.all(24.0),
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  IconButton(
-                                    visualDensity: VisualDensity.compact,
-                                    padding: EdgeInsets.zero,
-                                    onPressed: () {
-                                      encyclopediaConsumer.goToPrevious();
-                                    },
-                                    icon: Icon(
-                                      CupertinoIcons.chevron_right_circle,
-                                      color: whiteColor,
+                              child: Padding(
+                                padding: const EdgeInsets.all(24.0),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    IconButton(
+                                      visualDensity: VisualDensity.compact,
+                                      padding: EdgeInsets.zero,
+                                      onPressed: () {
+                                        encyclopediaConsumer.goToPrevious();
+                                      },
+                                      icon: Icon(
+                                        CupertinoIcons.chevron_right_circle,
+                                        color: whiteColor,
+                                      ),
                                     ),
-                                  ),
-                                  Text(
-                                    encyclopediaConsumer
-                                        .encyclopedia[encyclopediaConsumer
-                                            .selectedIndex]
-                                        .encyclopediaTitle,
-                                    style: displaySmall.copyWith(
-                                      color: whiteColor,
+                                    Text(
+                                      encyclopediaConsumer
+                                          .encyclopedia[encyclopediaConsumer
+                                              .encycleopediaTabController!
+                                              .index]
+                                          .encyclopediaTitle,
+                                      style: displaySmall.copyWith(
+                                        color: whiteColor,
+                                      ),
                                     ),
-                                  ),
-                                  IconButton(
-                                    visualDensity: VisualDensity.compact,
-                                    padding: EdgeInsets.zero,
-                                    onPressed: () {
-                                      encyclopediaConsumer.goToNext();
-                                    },
-                                    icon: Icon(
-                                      CupertinoIcons.chevron_left_circle,
-                                      color: whiteColor,
+                                    IconButton(
+                                      visualDensity: VisualDensity.compact,
+                                      padding: EdgeInsets.zero,
+                                      onPressed: () {
+                                        encyclopediaConsumer.goToNext();
+                                      },
+                                      icon: Icon(
+                                        CupertinoIcons.chevron_left_circle,
+                                        color: whiteColor,
+                                      ),
                                     ),
-                                  ),
-                                ],
+                                  ],
+                                ),
                               ),
                             ),
                           ),

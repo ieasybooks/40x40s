@@ -13,6 +13,7 @@ class EncyclopediaProvider extends BaseProvider {
   int selectedIndex = 0;
   setSelectedIndex(int i) {
     selectedIndex = i;
+    encycleopediaTabController?.animateTo(i);
     setBusy(false);
   }
 
@@ -60,6 +61,12 @@ class EncyclopediaProvider extends BaseProvider {
             length: encyclopedia.length,
             vsync: homeScaffoldKey.currentState!,
           );
+          encycleopediaTabController!.addListener(() {
+            if (encycleopediaTabController!.indexIsChanging) {
+              selectedIndex = encycleopediaTabController!.index;
+              setBusy(false); // This will trigger notifyListeners()
+            }
+          });
           setBusy(false);
           return;
         } else {
@@ -95,6 +102,12 @@ class EncyclopediaProvider extends BaseProvider {
         length: encyclopedia.length,
         vsync: homeScaffoldKey.currentState!,
       );
+      encycleopediaTabController!.addListener(() {
+        if (encycleopediaTabController!.indexIsChanging) {
+          selectedIndex = encycleopediaTabController!.index;
+          setBusy(false); // This will trigger notifyListeners()
+        }
+      });
     } else {
       encyclopedia = [];
     }

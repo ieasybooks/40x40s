@@ -106,7 +106,7 @@ class MyApp extends StatelessWidget {
                     theme.isDark ? whiteColor : blackColor,
                   ),
                   shadowColor: WidgetStatePropertyAll(
-                    theme.isDark ? whiteColor : blackColor,
+                    theme.isDark ? null : blackColor,
                   ),
                   elevation: WidgetStatePropertyAll(3),
                 ),

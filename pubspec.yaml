@@ -122,8 +122,11 @@ flutter:
     - family: MyriadArabic
       fonts:
         - asset: assets/fonts/MyriadArabic-Regular.otf
-  #       - asset: fonts/Schyler-Italic.ttf
-  #         style: italic
+    #       - asset: fonts/Schyler-Italic.ttf
+    #         style: italic
+    - family: Kitab-font
+      fonts:
+        - asset: assets/fonts/Kitab-Regular.ttf
   #   - family: Trajan Pro
   #     fonts:
   #       - asset: fonts/TrajanPro.ttf

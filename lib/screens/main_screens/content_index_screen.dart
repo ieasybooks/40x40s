@@ -7,7 +7,6 @@ import 'package:fourtyfourties/model/encyclopedia_model.dart';
 import 'package:fourtyfourties/providers/dark_theme_provider.dart';
 import 'package:fourtyfourties/providers/encyclopedia_provider.dart';
 import 'package:fourtyfourties/screens/main_screens/settings_screen.dart';
-import 'package:fourtyfourties/screens/main_screens/single_hadeeth_screen.dart';
 import 'package:provider/provider.dart';
 
 class ContentIndexScreen extends StatefulWidget {
@@ -61,7 +60,7 @@ class _ContentIndexScreenState extends State<ContentIndexScreen> {
                             BoxShadow(
                               color:
                                   theme.isDark
-                                      ? whiteInDark
+                                      ? whiteInDark.withValues(alpha: 0.0)
                                       : whiteInDark.withValues(alpha: 0.05),
                               spreadRadius: 5,
                               blurRadius: 7,
@@ -134,7 +133,7 @@ class _ContentIndexScreenState extends State<ContentIndexScreen> {
                               BoxShadow(
                                 color:
                                     theme.isDark
-                                        ? whiteInDark
+                                        ? whiteInDark.withValues(alpha: 0.0)
                                         : whiteInDark.withValues(alpha: 0.05),
                                 spreadRadius: 5,
                                 blurRadius: 7,
@@ -151,6 +150,7 @@ class _ContentIndexScreenState extends State<ContentIndexScreen> {
                                   searchValue: searchController.text,
                                   encyclopediaModel:
                                       encyclopediaProvider.encyclopedia[index],
+                                  index: index,
                                 ),
                               );
                             },
@@ -185,7 +185,7 @@ class _ContentIndexScreenState extends State<ContentIndexScreen> {
                               BoxShadow(
                                 color:
                                     theme.isDark
-                                        ? whiteInDark
+                                        ? whiteInDark.withValues(alpha: 0.0)
                                         : whiteInDark.withValues(alpha: 0.05),
                                 spreadRadius: 5,
                                 blurRadius: 7,
@@ -237,144 +237,155 @@ class IndexItemCard extends StatelessWidget {
     super.key,
     required this.encyclopediaModel,
     this.searchValue,
+    required this.index,
   });
   final EncyclopediaModel encyclopediaModel;
   final String? searchValue;
+  final int index;
   @override
   Widget build(BuildContext context) {
     return Consumer<DarkThemeProvider>(
       builder: (context, theme, _) {
-        return Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                encyclopediaModel.encyclopediaTitle,
-                style: displayLarge.copyWith(
-                  color: theme.isDark ? whiteColor : blackColor,
+        return GestureDetector(
+          onTap: () {
+            Provider.of<EncyclopediaProvider>(
+              context,
+              listen: false,
+            ).setSelectedIndex(index);
+            Navigator.pop(context);
+          },
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  encyclopediaModel.encyclopediaTitle,
+                  style: displayLarge.copyWith(
+                    color: theme.isDark ? whiteColor : blackColor,
+                  ),
                 ),
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 32,
-                  vertical: 16,
-                ),
-                child: ListView.builder(
-                  shrinkWrap: true,
-                  physics: NeverScrollableScrollPhysics(),
-                  itemCount: encyclopediaModel.ahadeeth.length,
-                  itemBuilder: (context, hadeethIndex) {
-                    return AnimatedSize(
-                      duration: 300.ms,
-                      child:
-                          searchValue != null
-                              ? (encyclopediaModel
-                                          .ahadeeth[hadeethIndex]
-                                          .hadeethTitle
-                                          .contains(searchValue!) ||
-                                      encyclopediaModel
-                                          .ahadeeth[hadeethIndex]
-                                          .hadeethContent
-                                          .contains(searchValue!))
-                                  ? Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                      vertical: 8.0,
-                                    ),
-                                    child: Row(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Expanded(
-                                          child: Column(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.start,
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              Text(
-                                                encyclopediaModel
-                                                    .ahadeeth[hadeethIndex]
-                                                    .hadeethTitle,
-                                                style: labelLarge.copyWith(
-                                                  color:
-                                                      theme.isDark
-                                                          ? whiteColor
-                                                              .withValues(
-                                                                alpha: 0.7,
-                                                              )
-                                                          : blackColor,
-                                                ),
-                                                maxLines: 1,
-                                              ),
-                                              if (searchValue != null &&
-                                                  !encyclopediaModel
-                                                      .ahadeeth[hadeethIndex]
-                                                      .hadeethTitle
-                                                      .contains(searchValue!) &&
-                                                  encyclopediaModel
-                                                      .ahadeeth[hadeethIndex]
-                                                      .hadeethContent
-                                                      .contains(searchValue!))
-                                                Text(
-                                                  "${searchValue!}......",
-                                                  style: labelSmall.copyWith(
-                                                    color:
-                                                        theme.isDark
-                                                            ? whiteColor
-                                                                .withValues(
-                                                                  alpha: 0.5,
-                                                                )
-                                                            : blackColor
-                                                                .withValues(
-                                                                  alpha: 0.7,
-                                                                ),
-                                                  ),
-                                                  maxLines: 1,
-                                                ),
-                                            ],
-                                          ),
-                                        ),
+                // Padding(
+                //   padding: const EdgeInsets.symmetric(
+                //     horizontal: 32,
+                //     vertical: 16,
+                //   ),
+                //   child: ListView.builder(
+                //     shrinkWrap: true,
+                //     physics: NeverScrollableScrollPhysics(),
+                //     itemCount: encyclopediaModel.ahadeeth.length,
+                //     itemBuilder: (context, hadeethIndex) {
+                //       return AnimatedSize(
+                //         duration: 300.ms,
+                //         child:
+                //             searchValue != null
+                //                 ? (encyclopediaModel
+                //                             .ahadeeth[hadeethIndex]
+                //                             .hadeethTitle
+                //                             .contains(searchValue!) ||
+                //                         encyclopediaModel
+                //                             .ahadeeth[hadeethIndex]
+                //                             .hadeethContent
+                //                             .contains(searchValue!))
+                //                     ? Padding(
+                //                       padding: const EdgeInsets.symmetric(
+                //                         vertical: 8.0,
+                //                       ),
+                //                       child: Row(
+                //                         crossAxisAlignment:
+                //                             CrossAxisAlignment.start,
+                //                         children: [
+                //                           Expanded(
+                //                             child: Column(
+                //                               mainAxisAlignment:
+                //                                   MainAxisAlignment.start,
+                //                               crossAxisAlignment:
+                //                                   CrossAxisAlignment.start,
+                //                               children: [
+                //                                 Text(
+                //                                   encyclopediaModel
+                //                                       .ahadeeth[hadeethIndex]
+                //                                       .hadeethTitle,
+                //                                   style: labelLarge.copyWith(
+                //                                     color:
+                //                                         theme.isDark
+                //                                             ? whiteColor
+                //                                                 .withValues(
+                //                                                   alpha: 0.7,
+                //                                                 )
+                //                                             : blackColor,
+                //                                   ),
+                //                                   maxLines: 1,
+                //                                 ),
+                //                                 if (searchValue != null &&
+                //                                     !encyclopediaModel
+                //                                         .ahadeeth[hadeethIndex]
+                //                                         .hadeethTitle
+                //                                         .contains(searchValue!) &&
+                //                                     encyclopediaModel
+                //                                         .ahadeeth[hadeethIndex]
+                //                                         .hadeethContent
+                //                                         .contains(searchValue!))
+                //                                   Text(
+                //                                     "${searchValue!}......",
+                //                                     style: labelSmall.copyWith(
+                //                                       color:
+                //                                           theme.isDark
+                //                                               ? whiteColor
+                //                                                   .withValues(
+                //                                                     alpha: 0.5,
+                //                                                   )
+                //                                               : blackColor
+                //                                                   .withValues(
+                //                                                     alpha: 0.7,
+                //                                                   ),
+                //                                     ),
+                //                                     maxLines: 1,
+                //                                   ),
+                //                               ],
+                //                             ),
+                //                           ),
 
-                                        GestureDetector(
-                                          onTap: () {
-                                            Navigator.push(
-                                              context,
-                                              CupertinoPageRoute(
-                                                builder:
-                                                    (
-                                                      context,
-                                                    ) => SingleHadeethScreen(
-                                                      hadeeth:
-                                                          encyclopediaModel
-                                                              .ahadeeth[hadeethIndex],
-                                                    ),
-                                              ),
-                                            );
-                                          },
-                                          child: Text(
-                                            "عرض الحديث",
-                                            style: labelLarge.copyWith(
-                                              color: greenColor,
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  )
-                                  : SizedBox()
-                              : SizedBox(),
-                    );
-                  },
+                //                           GestureDetector(
+                //                             onTap: () {
+                //                               Navigator.push(
+                //                                 context,
+                //                                 CupertinoPageRoute(
+                //                                   builder:
+                //                                       (
+                //                                         context,
+                //                                       ) => SingleHadeethScreen(
+                //                                         hadeeth:
+                //                                             encyclopediaModel
+                //                                                 .ahadeeth[hadeethIndex],
+                //                                       ),
+                //                                 ),
+                //                               );
+                //                             },
+                //                             child: Text(
+                //                               "عرض الحديث",
+                //                               style: labelLarge.copyWith(
+                //                                 color: greenColor,
+                //                               ),
+                //                             ),
+                //                           ),
+                //                         ],
+                //                       ),
+                //                     )
+                //                     : SizedBox()
+                //                 : SizedBox(),
+                //       );
+                //     },
+                //   ),
+                // ),
+                Divider(
+                  color:
+                      theme.isDark
+                          ? whiteColor.withValues(alpha: 0.1)
+                          : blackColor.withValues(alpha: 0.1),
                 ),
-              ),
-              Divider(
-                color:
-                    theme.isDark
-                        ? whiteColor.withValues(alpha: 0.1)
-                        : blackColor.withValues(alpha: 0.1),
-              ),
-            ],
+              ],
+            ),
           ),
         );
       },
