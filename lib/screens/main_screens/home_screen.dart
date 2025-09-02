@@ -168,7 +168,7 @@ class _HomeScreenState extends State<HomeScreen>
                                     encyclopedia,
                                   ) {
                                     return Tab(
-                                      text: encyclopedia.encyclopediaTitle,
+                                      text: encyclopedia.title,
                                     );
                                   }).toList(),
                             ),
@@ -252,15 +252,15 @@ class _HomeScreenState extends State<HomeScreen>
                                                           const NeverScrollableScrollPhysics(),
                                                       itemCount:
                                                           encyclopedia
-                                                              .ahadeeth
+                                                              .hadiths
                                                               .length,
                                                       itemBuilder: (
                                                         context,
                                                         index,
                                                       ) {
-                                                        final hadeeth =
+                                                        final hadith =
                                                             encyclopedia
-                                                                .ahadeeth[index];
+                                                                .hadiths[index];
                                                         return Padding(
                                                           padding:
                                                               const EdgeInsets.symmetric(
@@ -275,8 +275,8 @@ class _HomeScreenState extends State<HomeScreen>
                                                                         .spaceBetween,
                                                                 children: [
                                                                   Text(
-                                                                    hadeeth
-                                                                        .hadeethTitle,
+                                                                    hadith
+                                                                        .title,
                                                                     style: labelMedium.copyWith(
                                                                       color:
                                                                           darkThemeConsumer.isDark
@@ -301,7 +301,7 @@ class _HomeScreenState extends State<HomeScreen>
                                                                           Clipboard.setData(
                                                                             ClipboardData(
                                                                               text:
-                                                                                  "${hadeeth.hadeethTitle} | ${hadeeth.hadeethContent}",
+                                                                                  "${hadith.title} | ${hadith.text}",
                                                                             ),
                                                                           ).then((
                                                                             v,
@@ -343,7 +343,7 @@ class _HomeScreenState extends State<HomeScreen>
                                                                           SharePlus.instance.share(
                                                                             ShareParams(
                                                                               text:
-                                                                                  "${hadeeth.hadeethTitle} | ${hadeeth.hadeethContent}",
+                                                                                  "${hadith.title} | ${hadith.text}",
                                                                             ),
                                                                           );
                                                                         },
@@ -369,8 +369,8 @@ class _HomeScreenState extends State<HomeScreen>
                                                                 ],
                                                               ),
                                                               Text(
-                                                                hadeeth
-                                                                    .hadeethContent,
+                                                                hadith
+                                                                    .text,
                                                                 style: labelLarge.copyWith(
                                                                   fontFamily:
                                                                       "Kitab-font",
@@ -463,7 +463,7 @@ class _HomeScreenState extends State<HomeScreen>
                                           .encyclopedia[encyclopediaConsumer
                                               .encycleopediaTabController!
                                               .index]
-                                          .encyclopediaTitle,
+                                          .title,
                                       style: displaySmall.copyWith(
                                         color: whiteColor,
                                       ),

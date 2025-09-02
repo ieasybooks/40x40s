@@ -260,7 +260,7 @@ class IndexItemCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  encyclopediaModel.encyclopediaTitle,
+                  encyclopediaModel.title,
                   style: displayLarge.copyWith(
                     color: theme.isDark ? whiteColor : blackColor,
                   ),
@@ -273,19 +273,19 @@ class IndexItemCard extends StatelessWidget {
                 //   child: ListView.builder(
                 //     shrinkWrap: true,
                 //     physics: NeverScrollableScrollPhysics(),
-                //     itemCount: encyclopediaModel.ahadeeth.length,
-                //     itemBuilder: (context, hadeethIndex) {
+                //     itemCount: encyclopediaModel.hadiths.length,
+                //     itemBuilder: (context, hadithIndex) {
                 //       return AnimatedSize(
                 //         duration: 300.ms,
                 //         child:
                 //             searchValue != null
                 //                 ? (encyclopediaModel
-                //                             .ahadeeth[hadeethIndex]
-                //                             .hadeethTitle
+                //                             .hadiths[hadithIndex]
+                //                             .title
                 //                             .contains(searchValue!) ||
                 //                         encyclopediaModel
-                //                             .ahadeeth[hadeethIndex]
-                //                             .hadeethContent
+                //                             .hadiths[hadithIndex]
+                //                             .text
                 //                             .contains(searchValue!))
                 //                     ? Padding(
                 //                       padding: const EdgeInsets.symmetric(
@@ -304,8 +304,8 @@ class IndexItemCard extends StatelessWidget {
                 //                               children: [
                 //                                 Text(
                 //                                   encyclopediaModel
-                //                                       .ahadeeth[hadeethIndex]
-                //                                       .hadeethTitle,
+                //                                       .hadiths[hadithIndex]
+                //                                       .title,
                 //                                   style: labelLarge.copyWith(
                 //                                     color:
                 //                                         theme.isDark
@@ -319,12 +319,12 @@ class IndexItemCard extends StatelessWidget {
                 //                                 ),
                 //                                 if (searchValue != null &&
                 //                                     !encyclopediaModel
-                //                                         .ahadeeth[hadeethIndex]
-                //                                         .hadeethTitle
+                //                                         .hadiths[hadithIndex]
+                //                                         .title
                 //                                         .contains(searchValue!) &&
                 //                                     encyclopediaModel
-                //                                         .ahadeeth[hadeethIndex]
-                //                                         .hadeethContent
+                //                                         .hadiths[hadithIndex]
+                //                                         .text
                 //                                         .contains(searchValue!))
                 //                                   Text(
                 //                                     "${searchValue!}......",
@@ -354,10 +354,10 @@ class IndexItemCard extends StatelessWidget {
                 //                                   builder:
                 //                                       (
                 //                                         context,
-                //                                       ) => SingleHadeethScreen(
-                //                                         hadeeth:
+                //                                       ) => SingleHadithScreen(
+                //                                         hadith:
                 //                                             encyclopediaModel
-                //                                                 .ahadeeth[hadeethIndex],
+                //                                                 .hadiths[hadithIndex],
                 //                                       ),
                 //                                 ),
                 //                               );

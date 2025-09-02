@@ -9,9 +9,9 @@ import 'package:fourtyfourties/widgets/dialogs/flush_bar.dart';
 import 'package:provider/provider.dart';
 import 'package:share_plus/share_plus.dart';
 
-class SingleHadeethScreen extends StatelessWidget {
-  const SingleHadeethScreen({super.key, required this.hadeeth});
-  final Hadeeth hadeeth;
+class SingleHadithScreen extends StatelessWidget {
+  const SingleHadithScreen({super.key, required this.hadith});
+  final Hadith hadith;
   @override
   Widget build(BuildContext context) {
     return Consumer<DarkThemeProvider>(
@@ -69,7 +69,7 @@ class SingleHadeethScreen extends StatelessWidget {
                             children: [
                               Expanded(
                                 child: Text(
-                                  hadeeth.hadeethTitle,
+                                  hadith.title,
                                   style: displayMedium.copyWith(
                                     color:
                                         theme.isDark ? whiteColor : blackColor,
@@ -87,7 +87,7 @@ class SingleHadeethScreen extends StatelessWidget {
                                       Clipboard.setData(
                                         ClipboardData(
                                           text:
-                                              "${hadeeth.hadeethTitle} | ${hadeeth.hadeethContent}",
+                                              "${hadith.title} | ${hadith.text}",
                                         ),
                                       ).then((v) {
                                         if (context.mounted) {
@@ -121,7 +121,7 @@ class SingleHadeethScreen extends StatelessWidget {
                                       SharePlus.instance.share(
                                         ShareParams(
                                           text:
-                                              "${hadeeth.hadeethTitle} | ${hadeeth.hadeethContent}",
+                                              "${hadith.title} | ${hadith.text}",
                                         ),
                                       );
                                     },
@@ -144,7 +144,7 @@ class SingleHadeethScreen extends StatelessWidget {
                           ),
                           SizedBox(height: 16),
                           Text(
-                            hadeeth.hadeethContent,
+                            hadith.text,
                             style: labelLarge.copyWith(
                               color: theme.isDark ? whiteColor : blackColor,
                             ),

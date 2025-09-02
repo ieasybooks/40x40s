@@ -90,7 +90,7 @@ class MyApp extends StatelessWidget {
             theme: ThemeData(
               colorScheme: ColorScheme.fromSeed(seedColor: greenColor),
               scaffoldBackgroundColor: theme.isDark ? blackColor : greyColor,
-              tabBarTheme: TabBarTheme(
+              tabBarTheme: TabBarThemeData(
                 labelColor: theme.isDark ? whiteColor : blackColor,
                 unselectedLabelColor:
                     theme.isDark

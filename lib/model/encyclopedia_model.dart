@@ -2,13 +2,13 @@ import 'dart:convert';
 
 class EncyclopediaModel {
   final int id;
-  final String encyclopediaTitle;
-  final List<Hadeeth> ahadeeth;
+  final String title;
+  final List<Hadith> hadiths;
 
   EncyclopediaModel({
     required this.id,
-    required this.encyclopediaTitle,
-    required this.ahadeeth,
+    required this.title,
+    required this.hadiths,
   });
 
   factory EncyclopediaModel.fromRawJson(String str) =>
@@ -17,55 +17,55 @@ class EncyclopediaModel {
   String toRawJson() => json.encode(toJson());
 
   factory EncyclopediaModel.fromJson(Map<String, dynamic> json) {
-    final rawHadeeth = json["ahadeeth"];
-    List<Hadeeth> ahadeethList = [];
+    final rawHadith = json["hadiths"];
+    List<Hadith> hadithsList = [];
 
-    if (rawHadeeth is List) {
-      ahadeethList =
-          rawHadeeth.map<Hadeeth>((x) => Hadeeth.fromJson(x)).toList();
-    } else if (rawHadeeth is Map) {
-      ahadeethList =
-          rawHadeeth.values.map<Hadeeth>((x) => Hadeeth.fromJson(x)).toList();
+    if (rawHadith is List) {
+      hadithsList =
+          rawHadith.map<Hadith>((x) => Hadith.fromJson(x)).toList();
+    } else if (rawHadith is Map) {
+      hadithsList =
+          rawHadith.values.map<Hadith>((x) => Hadith.fromJson(x)).toList();
     }
 
     return EncyclopediaModel(
       id: json["id"],
-      encyclopediaTitle: json["encyclopediaـtitle"],
-      ahadeeth: ahadeethList,
+      title: json["title"],
+      hadiths: hadithsList,
     );
   }
 
   Map<String, dynamic> toJson() => {
     "id": id,
-    "encyclopediaـtitle": encyclopediaTitle,
-    "ahadeeth": ahadeeth.map((x) => x.toJson()).toList(),
+    "title": title,
+    "hadiths": hadiths.map((x) => x.toJson()).toList(),
   };
 }
 
-class Hadeeth {
+class Hadith {
   final int id;
-  final String hadeethTitle;
-  final String hadeethContent;
+  final String title;
+  final String text;
 
-  Hadeeth({
+  Hadith({
     required this.id,
-    required this.hadeethTitle,
-    required this.hadeethContent,
+    required this.title,
+    required this.text,
   });
 
-  factory Hadeeth.fromRawJson(String str) => Hadeeth.fromJson(json.decode(str));
+  factory Hadith.fromRawJson(String str) => Hadith.fromJson(json.decode(str));
 
   String toRawJson() => json.encode(toJson());
 
-  factory Hadeeth.fromJson(Map<String, dynamic> json) => Hadeeth(
+  factory Hadith.fromJson(Map<String, dynamic> json) => Hadith(
     id: json["id"],
-    hadeethTitle: json["hadeeth_title"],
-    hadeethContent: json["hadeeth_content"],
+    title: json["title"],
+    text: json["text"],
   );
 
   Map<String, dynamic> toJson() => {
     "id": id,
-    "hadeeth_title": hadeethTitle,
-    "hadeeth_content": hadeethContent,
+    "title": title,
+    "text": text,
   };
 }

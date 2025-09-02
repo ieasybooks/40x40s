@@ -38,7 +38,7 @@ class EncyclopediaProvider extends BaseProvider {
 
   static const String _dataKey = 'encyclopedia_data';
   static const String _dataUrl =
-      'https://raw.githubusercontent.com/mohamed97alsaee/fourties_data/main/data.json';
+      'https://raw.githubusercontent.com/ieasybooks/40x40s/main/data.json';
 
   List<EncyclopediaModel> encyclopedia = [];
 
